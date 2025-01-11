@@ -27,7 +27,6 @@ class GameEngine:
         self.bishop_b = pygame.transform.scale(self.bishop_b, self.size_figures)
         self.rook_w = pygame.transform.scale(self.rook_w, self.size_figures)
         self.rook_b = pygame.transform.scale(self.rook_b, self.size_figures)
-        self.bishop_b = pygame.transform.scale(self.bishop_b, self.size_figures)
         self.queen_w = pygame.transform.scale(self.queen_w, self.size_figures)
         self.queen_b = pygame.transform.scale(self.queen_b, self.size_figures)
         self.knight_w = pygame.transform.scale(self.knight_w, self.size_figures)
@@ -55,103 +54,155 @@ class GameEngine:
                 else:
                     pygame.draw.rect(self.playground, (236,236,215), self.playgound_surfaces[i][j])
         self.screen.blit(self.playground, (0,0))
-        pygame.display.flip()
 
 
-    def draw_figures(self):
+    def draw_figures(self, except_figures:list=None):
         for i in range(8):
             for j in range(8):
                 match type(self.board.figures[i][j]):
                     case chess.Rook:
-                        if self.board.figures[i][j].is_white:
-                            self.screen.blit(self.rook_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
-                        else:
-                            self.screen.blit(self.rook_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                        if except_figures is None or [i,j] not in except_figures:
+                            if self.board.figures[i][j].is_white:
+                                self.screen.blit(self.rook_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                            else:
+                                self.screen.blit(self.rook_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
                     case chess.Bishop:
-                        if self.board.figures[i][j].is_white:
-                            self.screen.blit(self.bishop_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
-                        else:
-                            self.screen.blit(self.bishop_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                        if except_figures is None or [i,j] not in except_figures:
+                            if self.board.figures[i][j].is_white:
+                                self.screen.blit(self.bishop_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                            else:
+                                self.screen.blit(self.bishop_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
 
                     case chess.Knight:
-                        if self.board.figures[i][j].is_white:
-                            self.screen.blit(self.knight_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
-                        else:
-                            self.screen.blit(self.knight_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                        if except_figures is None or [i,j] not in except_figures:
+                            if self.board.figures[i][j].is_white:
+                                self.screen.blit(self.knight_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                            else:
+                                self.screen.blit(self.knight_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
                     case chess.Queen:
-                        if self.board.figures[i][j].is_white:
-                            self.screen.blit(self.queen_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
-                        else:
-                            self.screen.blit(self.queen_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                        if except_figures is None or [i,j] not in except_figures:
+                            if self.board.figures[i][j].is_white:
+                                self.screen.blit(self.queen_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                            else:
+                                self.screen.blit(self.queen_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
 
                     case chess.King:
-                        if self.board.figures[i][j].is_white:
-                            self.screen.blit(self.king_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
-                        else:
-                            self.screen.blit(self.king_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                        if except_figures is None or [i,j] not in except_figures:
+                            if self.board.figures[i][j].is_white:
+                                self.screen.blit(self.king_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                            else:
+                                self.screen.blit(self.king_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
 
                     case chess.Pawn:
-                        if self.board.figures[i][j].is_white:
-                            self.screen.blit(self.pawn_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
-                        else:
-                            self.screen.blit(self.pawn_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                        if except_figures is None or [i,j] not in except_figures:
+                            if self.board.figures[i][j].is_white:
+                                self.screen.blit(self.pawn_w, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
+                            else:
+                                self.screen.blit(self.pawn_b, ((j*(self.width/8)-self.size_figures[0]//2)+(self.width/8)/2, (self.height-(i*self.height/8)-(self.height/8)-self.size_figures[1]//2)+(self.height/8)/2))
 
-        pygame.display.flip()
-                    
+
+
+    def get_image_from_obj(self, obj):
+        match type(obj):
+            case chess.Rook:
+                if obj.is_white:
+                    return self.rook_w
+                else:
+                    return self.rook_b
+            case chess.Bishop:
+                if obj.is_white:
+                    return self.bishop_w
+                else:
+                    return self.bishop_b
+                
+            case chess.Knight:
+                if obj.is_white:
+                    return self.knight_w
+                else:
+                    return self.knight_b
+                
+            case chess.Queen:
+                if obj.is_white:
+                    return self.queen_w
+                else:
+                    return self.queen_b
+                
+            case chess.King:
+                if obj.is_white:
+                    return self.king_w
+                else:
+                    return self.king_b
+            
+            case chess.Pawn:
+                if obj.is_white:
+                    return self.pawn_w
+                else:
+                    return self.pawn_b
+                     
 
     def main(self):
         running = True
         self.draw_field()
         self.draw_figures()
+        pygame.display.flip()
         a = None
         b = None
-        targeted_surface = None
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-                #if event.type == pygame.MOUSEMOTION and a is not None:
-                #    self.screen.blit(self.playgound_surfaces[i][j], pygame.mouse.get_pos())
-                #    pygame.display.flip()
+                if event.type == pygame.MOUSEMOTION and a is not None:
+                    self.draw_field()
+                    self.draw_figures(except_figures=[a])
+                    mouse_pos = pygame.mouse.get_pos()
+                    self.screen.blit(self.tageted_image, (mouse_pos[0]-self.size_figures[0]//2, mouse_pos[1]-self.size_figures[1]//2))
+
+                    
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     mouse_pos = pygame.mouse.get_pos()
                     if event.button == 1: 
                         for i in range(8):
                             for j in range(8):
-                                if self.playgound_surfaces[i][j].collidepoint(mouse_pos):
+                                if self.playgound_surfaces[i][j].collidepoint(mouse_pos) and self.board.figures[i][j] is not None:
                                     a = [i, j]
-                                    targeted_surface = self.playgound_surfaces[i][j]
+                                    self.tageted_image = self.get_image_from_obj(self.board.figures[i][j])
+                                    
                                     
                 if event.type == pygame.MOUSEBUTTONUP:
                     mouse_pos = pygame.mouse.get_pos()
-                    if event.button == 1: 
-                        for i in range(8):
-                            for j in range(8):
-                                if self.playgound_surfaces[i][j].collidepoint(mouse_pos):
-                                    if a is not None:
-                                        b = [i, j]
-                                        match self.board.main(a,b):
-                                            case 0:
-                                                self.draw_field()
-                                                self.draw_figures()
-                                            case 1: #cannor move this way
-                                                pass
-                                            case 2: #checmkate, white won
-                                                self.draw_field()
-                                                self.draw_figures()
-                                                print("Weiß hat gewonnen")
-                                                
-                                            case 3: #checkmate, black has won
-                                                self.draw_field()
-                                                self.draw_figures()
-                                                print("Schwarz hat gewonnen")
+                    for i in range(8):
+                        for j in range(8):
+                            if self.playgound_surfaces[i][j].collidepoint(mouse_pos):
+                                if a is not None:
+                                    b = [i, j]
+                                    self.figs_old = self.board.figures
+                                    match self.board.main(a,b):
+                                        case 0: #move was successful
+                                            self.draw_field()
+                                            self.draw_figures()
+                                        case 1 | 4: #cannot move this way
+                                            self.draw_field()
+                                            self.draw_figures()
+                                            print(f"Kann nicht von {self.board.convert_coordinates_in_str(a)} nach {self.board.convert_coordinates_in_str(b)} ziehen")
+                                        case 2: #checmkate, white won
+                                            self.draw_field()
+                                            self.draw_figures()
+                                            print("Weiß hat gewonnen")
                                             
-                                            case 4: #incorrect pos syntax
-                                                pass
-                                            case 5:
-                                                print("Spiel zuende")     
-                                        a,b = None, None
+                                        case 3: #checkmate, black has won
+                                            self.draw_field()
+                                            self.draw_figures()
+                                            print("Schwarz hat gewonnen")
+                                        
+                                        case 5: #game over
+                                            print("Spiel zuende")
+
+                                    self.figs_new = self.board.figures 
+                                    a,b = None, None
+
+                
+                pygame.display.flip()
 
 board = chess.Board()
 game = GameEngine(board)
